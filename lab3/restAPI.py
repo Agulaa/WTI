@@ -51,11 +51,11 @@ def get_num_rating(n):
 
 @app.route("/avg-genre-ratings/all-users", methods = ['GET'])
 def get_avg_genre_ratings():
-    return get_mean_of_all_users()
+    return pass
 
 @app.route("/avg-genre-ratings/<int:id>", methods = ['GET'])
 def get_avg_genre_one_ratings(id):
-    return get_mean_of_one_user(id)
+    return pass
 
 
 

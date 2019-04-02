@@ -84,25 +84,13 @@ def prepare_data_to_send(n):
 
 
 def get_mean_of_all_users():
-    """
-    Get mean of all column (all genres) in dataframe
-    :return:
-    """
-
-    mean = [df[name].mean() for name in df.columns.values[3:]]
-    data = [{name:m} for name, m in zip(df.columns.values[3:], mean)]
-    return json.dumps(data)
+    
+    return pass
 
 
 def get_mean_of_one_user(user_id):
-    """
-    Get mean of all columns (all genres) for current user_id
-    :param user_id: user id
-    :return:
-    """
-    df_groupe = df.groupby("userID").mean()
-    data = df_groupe.iloc[user_id][3:].to_dict()
-    return json.dumps(data)
+    
+    return pass
 
 
 print(df.head())

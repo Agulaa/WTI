@@ -13,8 +13,8 @@ def join_dataframe(file_name_1, file_name_2):
     """
     df1 = pd.read_csv(file_name_1, sep="\t", usecols=["userID", "movieID", "rating"], nrows=100)
     df2 = pd.read_csv(file_name_2, sep="\t", usecols=["movieID", "genre"])
-    merged = df1.merge(df2, on='movieID')
-    #merged.to_csv("merged.csv", sep='\t')
+    # merged = df1.merge(df2, on='movieID')
+    # #merged.to_csv("merged.csv", sep='\t')
     df2["dummy_column"] = 1
     df_pivoted = df2.pivot_table(index="movieID", columns="genre", values="dummy_column") #The levels in the pivot table will be stored in MultiIndex objects
                                                                                             #  (hierarchical indexes) on the index and columns of the result DataFrame.

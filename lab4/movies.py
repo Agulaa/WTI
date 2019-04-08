@@ -11,7 +11,7 @@ def join_dataframe(file_name_1, file_name_2):
     :param file_name_2: txt file
     :return: joined dataframe and array genres
     """
-    df1 = pd.read_csv(file_name_1, sep="\t", usecols=["userID", "movieID", "rating"], nrows=100)
+    df1 = pd.read_csv(file_name_1, sep="\t", usecols=["userID", "movieID", "rating"], nrows=1000)
     df2 = pd.read_csv(file_name_2, sep="\t", usecols=["movieID", "genre"])
     # merged = df1.merge(df2, on='movieID')
     # #merged.to_csv("merged.csv", sep='\t')
@@ -26,9 +26,9 @@ def join_dataframe(file_name_1, file_name_2):
 
     df.columns = ["genres_" + name if name not in df.columns[:3] else name for name in df.columns]
     Genres_with = df.columns[3:-1].values
+    users_id = df['userID'].unique()
 
-
-    return df,  Genres, Genres_with
+    return df,  Genres, Genres_with, users_id
 
 
 #ZADANIE 2
@@ -128,15 +128,29 @@ def get_vector_for_ueser(mean_for_user, mean_genres):
 
     return new_mean_for_user, ar
 
+def create_matrix_all_user(users_id, Genres, merged):
+    data = []
+    data_ar = []
+    for id in users_id:
+        mean_for_user = get_mean_for_user(Genres, merged, id)
+
+        new_mean_for_user, ar = get_vector_for_ueser(mean_for_user, mean_genres)
+        data.append(new_mean_for_user)
+        data_ar.append(ar)
+
+    return data, data_ar
+
 
 if __name__ == '__main__':
     file_name_1 = "../user_ratedmovies.dat"
     file_name_2 = "../movie_genres.dat"
-    df, Genres, Genres_with = join_dataframe(file_name_1, file_name_2)
+    df, Genres, Genres_with, users_id = join_dataframe(file_name_1, file_name_2)
     mean_genres, merged = get_mean_of_all_genres(df,Genres ,Genres_with)
 
-    data = DataFrame_to_dict(df)
+   # data = DataFrame_to_dict(df)
 
-    mean_for_user = get_mean_for_user(Genres, merged, 75)
-
-    new_mean_for_user, ar = get_vector_for_ueser(mean_for_user,mean_genres )
+    data, data_ar = create_matrix_all_user(users_id, Genres, merged)
+    data_user = dict_to_DataFrame(data)
+    data_user['userID'] = users_id
+    data_user.set_index("userID", inplace=True, drop=True)
+    print(data_user)

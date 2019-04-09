@@ -80,7 +80,7 @@ def get_mean_of_all_genres(df, all_genres, all_genres_with):
 
     change_nan(mean_genres) # change Nan value
 
-    df1 = pd.read_csv("../user_ratedmovies.dat", sep="\t", usecols=["userID", "movieID", "rating"], nrows=100)
+    df1 = pd.read_csv("../user_ratedmovies.dat", sep="\t", usecols=["userID", "movieID", "rating"], nrows=1000)
     df2 = pd.read_csv(file_name_2, sep="\t", usecols=["movieID", "genre"])
     merged = df1.merge(df2, on='movieID')
     merged = merged.fillna(0)
